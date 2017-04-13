@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bootstrap1</title>
+    <script src="publicFile/jquery-3.1.1.js"></script>
+    <script src="publicFile/echarts.js"></script>
+</head>
+<body>
+
+<div id="page_local" style=" border:1px #000 solid;"></div>
+<!--<div id="page_local" style="height:100%; width: 50%; border:1px #000 solid;"></div>-->
+<!--
+<div  style="height:100%; width: 50%; border:1px #000 solid;">div 背景色设置_DIV背景颜色设置div 背景色设置_DIV背景颜色设置div 背景色设置_DIV背景颜色设置div 背景色设置_DIV背景颜色设置div 背景色设置_DIV背景颜色设置</div>
+-->
+<script type="text/javascript">
+    var main_1 = document.getElementById('page_local');
+    //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+    var resizeWorldMapContainer = function () {
+        alert(99);
+        main_1.style.width = window.innerWidth+'px';
+        main_1.style.height = window.innerHeight+'px';
+    };
+    //设置容器高宽
+    resizeWorldMapContainer();
+    var myChart;
+    $(function(){
+        myChart = echarts.init(document.getElementById("page_local"));
+        myChart.setOption( {
+            tooltip : { //提示框组件
+                trigger : 'item'
+            },
+            legend : { //图例
+                orient : 'vertical', //horizontal
+                x : 'left',
+                y:'middle',
+                data : ['AAAA','bbbb','CCCC','AAAA1','bbbb1','CCCC1']
+            },
+            calculable : false,//是否允许拖拽
+            series : [ {
+                type : 'pie',
+                radius : ['20%','100%',],
+                center : [ '50%', '50%' ],
+                itemStyle : {
+                    normal : {
+                        label : {
+                            show : true
+                        },
+                        labelLine : {
+                            show : true
+                        },
+                    },
+                },
+                data:[
+                    {value:300, name:'AAAA'},
+                    {value:400, name:'bbbb'},
+                    {value:500, name:'CCCC'},
+                    {value:300, name:'AAAA1'},
+                    {value:400, name:'bbbb1'},
+                    {value:500, name:'CCCC1'}
+                ]
+            } ]
+        });
+
+        $(window).resize(function(){
+            main_1.style.width = window.innerWidth+'px';
+            main_1.style.height = window.innerHeight+'px';
+            myChart.resize(window.innerWidth,window.innerHeight);
+        });
+    });
+</script>
+</body>
+</html>

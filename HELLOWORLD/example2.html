@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>the first HTML5 page   HelloWorld</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="publicFile/echarts.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="publicFile/jquery-3.1.1.js"></script>
+
+    <!-- 引入 Bootstrap -->
+    <link rel="stylesheet" href="publicFile/bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    <script src="publicFile/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="publicFile/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1.col-md-1</div>
+        <div class="col-md-6" id="main" style=" border:5px #000 solid;"></div><br>
+        <div class="col-md-3">.col-md-1</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">.col-md-1</div>
+        <div class="col-md-6">.col-md-1</div>
+        <div class="col-md-3">.col-md-1</div>
+    </div>
+</div>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+
+<script type="text/javascript">
+    var main_1 = document.getElementById('main');
+    //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+    var resizeWorldMapContainer = function () {
+        main_1.style.width = window.innerWidth+'px';
+        main_1.style.height = window.innerHeight+'px';
+    };
+    //设置容器高宽
+    resizeWorldMapContainer();
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    var option = {
+        baseOption: {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip : { //提示框组件
+                trigger : 'item'
+            },
+            legend: {
+                orient : 'vertical',
+                x : 'right',
+                data:['销量']
+            },
+            calculable : false,//是否允许拖拽
+            xAxis: {
+                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                radius : '100%',
+                center : [ '50%', '50%' ],
+                itemStyle : {
+                    normal : {
+                        label : {
+                            show : true
+                        },
+                        labelLine : {
+                            show : true
+                        },
+                    },
+                },
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        },
+        media: [
+            {
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    minAspectRatio: 1
+                },
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    maxAspectRatio: 1
+                },
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['50%', '30%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    maxWidth: 500
+                },
+                option: {
+                    legend: {
+                        right: 10,
+                        top: '15%',
+                        orient: 'vertical'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['50%', '30%']
+                        }
+                    ]
+                }
+            }
+        ]};
+    myChart.setOption(option);
+    $(window).resize(function(){
+        main.style.width = window.innerWidth+'px';
+        main.style.height = window.innerHeight+'px';
+        myChart.resize(window.innerWidth,window.innerHeight);
+    });
+</script>
+</body>
+</html>

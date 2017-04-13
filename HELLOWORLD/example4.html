@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>the first HTML5 page   HelloWorld</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="publicFile/echarts.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="publicFile/jquery-3.1.1.js"></script>
+
+    <!-- 引入 Bootstrap -->
+    <link rel="stylesheet" href="publicFile/bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    <script src="publicFile/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="publicFile/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        function fetchData(cb) {
+            // 通过 setTimeout 模拟异步加载
+            alert(2);
+            myChart.showLoading();
+            setTimeout(function () {
+                cb({
+                    categories: ["衬衫1","羊毛衫1","雪纺衫1","裤子1","高跟鞋1","袜子1"],
+                    data: [52, 20, 36, 10, 10, 20]
+                });
+            }, 3000);
+        }
+        function  doIt(clickValue) {
+            if(clickValue=="1"){
+
+
+
+               /* for(int i=0;i<l)*/
+                return;
+                // 异步加载数据
+                fetchData(function (data) {
+                    alert(1);
+                    myChart.hideLoading();
+                    myChart.setOption({
+                        xAxis: {
+                            data: data.categories
+                        },
+                        series: [{
+                            // 根据名字对应到相应的系列
+                            name: '销量',
+                            data: data.data
+                        }]
+                    });
+                });
+                $("#main").show();
+                $("#main1").hide();
+            }
+            if(clickValue=="2"){
+                $("#main").hide();
+                $("#main1").show();
+            }
+            if(clickValue=="5"){
+                $("#sub2").hide();
+                $("#sub1").show();
+            }
+            if(clickValue=="6"){
+                $("#sub2").show();
+                $("#sub1").hide();
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container-fluid" >
+    <div class="row">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active">
+                <a href="#" data-toggle="tab" onclick="doIt(5)">
+                    净值走势
+                </a>
+            </li>
+            <li><a href="#" data-toggle="tab" onclick="doIt(6)">收益涨幅</a></li>
+            <li><a href="#" data-toggle="tab">历史明细</a></li>
+        </ul>
+    </div>
+    <div id="sub1" style="display:none;margin: 0 auto;">
+    <div class="row">
+        <ul id="submyTab" class="nav nav-tabs">
+            <li class="active">
+                <a href="#" data-toggle="tab" onclick="doIt(1)">
+                    近一个月
+                </a>
+            </li>
+            <li class="active">
+                <a href="#" data-toggle="tab" onclick="doIt(2)">
+                    近一季度
+                </a>
+            </li>
+            <li class="active">
+                <a href="#" data-toggle="tab" onclick="doIt(3)">
+                    近半年
+                </a>
+            </li>
+            <li class="active">
+                <a href="#" data-toggle="tab" onclick="doIt(4)">
+                    近一年
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding:8px; text-align: match-parent">显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度</div>
+    </div>
+    <div class="row">
+        <div  id="main" style=" border:1px #000 solid;margin: 0 auto;"></div><br>
+        <div id="main1" style="display:none;margin: 0 auto;"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding:8px; margin: 0 auto;">显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度显示区的高度</div>
+    </div>
+    </div>
+    <div id="sub2" style="display:none;margin: 0 auto;">
+       <h1> 第二个标签页</h1>
+    </div>
+</div>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+
+<script type="text/javascript">
+    var main_1 = document.getElementById('main');
+
+    var main_2 = document.getElementById('main1');
+    //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+    var resizeWorldMapContainer = function () {
+        /*  main_1.style.width = window.innerWidth+'px';
+         main_1.style.height = window.innerHeight+'px';
+
+         main_2.style.width = window.innerWidth+'px';
+         main_2.style.height = window.innerHeight+'px'; */
+        main_1.style.width = (window.innerWidth-10)+'px';
+        main_1.style.height = (window.innerWidth-10)+'px';
+
+        main_2.style.width = (window.innerWidth-10)+'px';
+        main_2.style.height =  (window.innerWidth-10)+'px';
+    };
+    //设置容器高宽
+    resizeWorldMapContainer();
+    var myChart = echarts.init(document.getElementById('main'));
+    var myChart1 = echarts.init(document.getElementById('main1'));
+    // 指定图表的配置项和数据
+    var option = {
+        baseOption: {
+            title: {
+                text: '异步数据加载示例'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: []
+            }]
+        },
+        media: [
+            {
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    minAspectRatio: 1
+                },
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    maxAspectRatio: 1
+                },
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['50%', '30%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    maxWidth: 500
+                },
+                option: {
+                    legend: {
+                        right: 10,
+                        top: '15%',
+                        orient: 'vertical'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['50%', '30%']
+                        }
+                    ]
+                }
+            }
+        ]};
+
+    //堆叠区域图
+    option1 = {
+
+        baseOption: {
+            title: {
+                text: '堆叠区域图'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'邮件营销',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'联盟广告',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'视频广告',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name:'直接访问',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name:'搜索引擎',
+                    type:'line',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    areaStyle: {normal: {}},
+                    data:[820, 932, 901, 934, 1290, 1330, 1320]
+                }
+            ]
+        },
+        media: [
+            {
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    minAspectRatio: 1
+                },
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    maxAspectRatio: 1
+                },
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['50%', '30%']
+                        }
+                    ]
+                }
+            },
+            {
+                query: {
+                    maxWidth: 500
+                },
+                option: {
+                    legend: {
+                        right: 10,
+                        top: '15%',
+                        orient: 'vertical'
+                    },
+                    series: [
+                        {
+                            radius: [20, '50%'],
+                            center: ['50%', '30%']
+                        }
+                    ]
+                }
+            }
+        ]
+    };
+    myChart.setOption(option);
+    myChart1.setOption(option1);
+     $(window).resize(function(){
+         var divWidth=window.innerWidth-10;
+     main.style.width = divWidth+'px';
+     main.style.height = divWidth+'px';
+     document.getElementById("main1").style.width = divWidth+'px';
+     document.getElementById("main1").style.height = divWidth+'px';
+     myChart.resize(divWidth,divWidth);
+     myChart1.resize(divWidth,divWidth);
+     });
+</script>
+</body>
+</html>

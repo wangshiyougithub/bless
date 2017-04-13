@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>the first HTML5 page   HelloWorld</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="publicFile/echarts.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="publicFile/jquery-3.1.1.js"></script>
+
+    <!-- 引入 Bootstrap -->
+    <link rel="stylesheet" href="publicFile/bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    <script src="publicFile/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="publicFile/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        function startup() {
+            fetchData();
+        }
+
+    </script>
+</head>
+<body onload="startup()">
+<div id="main" style="width: 80%;height:80%;"></div><br>
+
+<script type="text/javascript">
+    var main_1 = document.getElementById('main');
+    var resizeWorldMapContainer = function () {
+        main_1.style.width = window.innerWidth+'px';
+        main_1.style.height = window.innerHeight+'px';
+    };
+    resizeWorldMapContainer();
+
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.setOption({
+        title: {
+            text: '异步数据加载示例'
+        },
+        tooltip: {
+            trigger: 'axis', //item’ | ‘axis’ ，提示框显示类型
+        },
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            type: 'category',//'category' 类目轴，适用于离散的类目数据，为该类型时必须通过 data 设置类目数据。
+            data: [],
+            axisLabel:{
+                interval:3
+            }
+        },
+        yAxis: {
+            type: 'value' //'value' 数值轴，适用于连续数据。
+        },
+       /* yAxis: {
+            data: []
+        },*/
+        series: [{
+            name: '销量',
+            type: 'line',
+            smooth:false,//是否是平滑曲线
+            symbol: 'roundRect', //标记的图形
+            sampling: 'average',//折线图在数据量远大于像素点时候的降采样策略，开启后可以有效的优化图表的绘制效率，默认关闭，也就是全部绘制不过滤数据点。
+            itemStyle: {
+                normal: {
+                    color: 'rgb(255, 70, 131)'
+                }
+            },
+            areaStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgb(255, 158, 68)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(255, 70, 131)'
+                    }])
+                }
+            },
+            data: [],
+            /*markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }*/
+            markPoint : {
+                data : [
+//                        {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                    {type : 'min', name: '周最低'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name : '平均值'}
+                ]
+            }
+        }]
+    });
+
+
+    var arrNav = [];
+    var arrDate = [];
+    // 异步加载数据
+    function fetchData() {
+        alert(333);
+        setLoadDate();
+        alert(arrNav);
+        myChart.setOption({
+            xAxis: {
+                data: arrDate
+            },
+            /*yAxis: {
+             data: data.categoriesy
+             },*/
+            series: [{
+                // 根据名字对应到相应的系列
+                name: '销量',
+                data: arrNav
+            }]
+        });
+    }
+    function setLoadDate() {
+        var jsonStr ='{"result":"0", "list":[ { "nav":"0.5", "publishdate":"2016-09-28" } , { "nav":"1.11", "publishdate":"2016-09-27" } , { "nav":"2.9", "publishdate":"2016-09-26" } , { "nav":"3.89", "publishdate":"2016-09-23" } , { "nav":"0.12", "publishdate":"2016-09-22" } , { "nav":"1.11", "publishdate":"2016-09-21" } , { "nav":"6.11", "publishdate":"2016-09-20" } , { "nav":"3.11", "publishdate":"2016-09-19" } , { "nav":"0.11", "publishdate":"2016-09-14" } , { "nav":"9.11", "publishdate":"2016-09-13" } , { "nav":"1.11", "publishdate":"2016-09-12" } , { "nav":"1.12", "publishdate":"2016-09-09" } , { "nav":"1.12", "publishdate":"2016-09-08" } , { "nav":"1.12", "publishdate":"2016-09-07" } , { "nav":"1.12", "publishdate":"2016-09-06" } , { "nav":"1.11", "publishdate":"2016-09-05" } , { "nav":"1.11", "publishdate":"2016-09-02" } , { "nav":"1.12", "publishdate":"2016-09-01" } , { "nav":"1.12", "publishdate":"2016-08-31" } , { "nav":"1.12", "publishdate":"2016-08-30" } , { "nav":"1.12", "publishdate":"2016-08-29" } , { "nav":"8.12", "publishdate":"2016-08-26" } , { "nav":"1.12", "publishdate":"2016-08-25" } , { "nav":"1.12", "publishdate":"2016-08-24" } , { "nav":"1.12", "publishdate":"2016-08-23" } , { "nav":"1.12", "publishdate":"2016-08-22" } , { "nav":"6.12", "publishdate":"2016-08-19" } , { "nav":"1.12", "publishdate":"2016-08-18" } , { "nav":"1.12", "publishdate":"2016-08-17" } , { "nav":"1.12", "publishdate":"2016-08-16" } , { "nav":"1.12", "publishdate":"2016-08-15" } , { "nav":"1.11", "publishdate":"2016-08-12" } , { "nav":"5.1", "publishdate":"2016-08-11" } , { "nav":"1.11", "publishdate":"2016-08-10" } , { "nav":"1.11", "publishdate":"2016-08-09" } , { "nav":"3.1", "publishdate":"2016-08-08" } ] }';
+        var jsonData=jQuery.parseJSON(jsonStr);
+        for(var i=0;i<jsonData.list.length;i++){
+            for(var key in jsonData.list[i]){
+                if(key=='nav'){
+                    arrNav.push(jsonData.list[i][key]);
+                }else if(key=='publishdate'){
+                    arrDate.push(jsonData.list[i][key]);
+                }
+            }
+        }
+    }
+
+
+
+</script>
+</body>
+</html>

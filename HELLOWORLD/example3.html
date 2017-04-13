@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>the first HTML5 page   HelloWorld</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="publicFile/echarts.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="publicFile/jquery-3.1.1.js"></script>
+</head>
+<body >
+<div id="main" style="width: 100%;height:100%;"></div><br>
+<script type="text/javascript">
+
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip : { //提示框组件
+            trigger : 'item'
+        },
+        legend: {
+            orient : 'vertical',
+            x : 'right',
+            data:['销量']
+        },
+        calculable : false,//是否允许拖拽
+        xAxis: {
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            radius : '100%',
+            center : [ '50%', '100%' ],
+            itemStyle : {
+                normal : {
+                    label : {
+                        show : true
+                    },
+                    labelLine : {
+                        show : true
+                    },
+                },
+            },
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+    myChart.setOption(option);
+    $(window).resize(function(){
+        myChart.resize();
+    });
+</script>
+</body>
+</html>
